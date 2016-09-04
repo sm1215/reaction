@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- <meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"> -->
+    <title>Canvas Testing</title>
+    <!-- <link href="css/base.css" type="text/css" rel="stylesheet"> -->
+    <style>
+    	#world{ border:1px solid silver; }</style>
+</head>
+<body>
+	<div id="menu">
+		<button id="add-button" type="button">Add</button>
+		<button id="remove-button" type="button">Remove</button>
+		<button id="stop-button" type="button">Stop</button>
+		<button id="start-button" type="button">Start</button>
+	</div>
+    <canvas id="world" height="600" width="800"></canvas>
+
+</body>
+<script type="text/javascript" src="js/jq.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/plugins/CSSPlugin.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/easing/EasePack.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenLite.min.js"></script> -->
+<script type="text/javascript" src="js/game.js"></script>
+
+
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		game.init();
+	})
+	.on('click', '#stop-button', function(e){
+		e.preventDefault();
+		game.stopAllReagents();
+	})
+	.on('click', '#start-button', function(e){
+		e.preventDefault();
+		game.startAllReagents();
+	})
+	.on('click', '#add-button', function(e){
+		e.preventDefault();
+		game.createReagent({
+			height: 100,
+			width: 100,
+			position: {},
+			destination: {},
+			color: null
+		});
+	})
+	.on('click', '#remove-button', function(e){
+		e.preventDefault();
+	})
+	;
+
+</script>
+</html>

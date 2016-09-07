@@ -42,8 +42,8 @@
 	.on('click', '#add-button', function(e){
 		e.preventDefault();
 		game.createReagent({
-			height: 100,
-			width: 100,
+			height: 50,
+			width: 50,
 			position: {},
 			destination: {},
 			color: null
@@ -51,6 +51,7 @@
 	})
 	.on('click', '#remove-button', function(e){
 		e.preventDefault();
+        game.destroyLatestReagent();
 	})
 	;
 

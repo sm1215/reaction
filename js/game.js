@@ -30,16 +30,11 @@ var game = {
 					y: this.getRandomValue(0, bounds.y - 50)
 				},
 				destination: {
-					// x: this.getRandomValue(0, bounds.x - 50),
-					// y: this.getRandomValue(0, bounds.y - 50)
-					x: 400,
-					y: 300
+					x: this.getRandomValue(0, bounds.x - 50),
+					y: this.getRandomValue(0, bounds.y - 50)
 				}
 			});
-			this.renderReagent(regs[i]);
 		};
-		
-		this.regs = regs;
 		
 		this.startAllReagents();
 	},
@@ -63,7 +58,11 @@ var game = {
 		reagent.position = { x: position.x, y: position.y };
 		reagent.destination = { x: destination.x, y: destination.y };
 		reagent.color = color;
-		return reagent;
+		this.regs.push(reagent);
+	},
+
+	destroyLatestReagent: function(){
+		this.regs.pop();
 	},
 
 	moveReagent: function(reg){
@@ -108,13 +107,25 @@ var game = {
 		reg.position.y += moveY;
 	},
 
-	clearReagent: function(reg){
-		this.context.clearRect(reg['position']['x'], reg.position.y, reg.width, reg.height);
+	clearCanvas: function(){
+		this.context.clearRect(0, 0, this.bounds.x, this.bounds.y);
 	},
 
 	renderReagent: function(reg){
 		this.context.fillStyle = 'rgb(' + reg.color + ')';
 		this.context.fillRect(reg.position.x, reg.position.y, reg.width, reg.height);
+	},
+
+	renderDestination: function(reg){
+		//figure out center point of reg
+		var centerX = reg.position.x + (reg.width / 2),
+			centerY = reg.position.y + (reg.height / 2);
+		
+		this.context.beginPath();
+
+		this.context.moveTo(centerX, centerY);
+		this.context.lineTo(reg.destination.x, reg.destination.y);
+		this.context.stroke();
 	},
 
 	checkReagentCollisions: function(index){
@@ -259,11 +270,14 @@ var game = {
 			timerSpeed = this.timerSpeed;
 		
 		this.moveRegs = setInterval(function(){
+			
+			game.clearCanvas();
+			
 			for (var i = 0; i < regs.length; i++) {
-				game.clearReagent(regs[i]);
 				game.moveReagent(regs[i]);
 				game.checkReagentCollisions(i);
 				game.renderReagent(regs[i]);
+				game.renderDestination(regs[i]);
 			};
 		}, timerSpeed);
 	},
